@@ -1,0 +1,17 @@
+{%load i18n static%}
+{%load staticfiles%}
+
+{%if all_employee%}
+
+    <ul>
+        {%for emp in all_employee%}
+        <li><a href = "/personel/list/{{ emp.id }}/">{{ emp.nome }}</a></li>
+        {%endfor%}
+
+    </ul>
+
+{% else %}
+    <h3>you dont have any Employee</h3>
+
+
+{% endif %}

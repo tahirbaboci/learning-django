@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+ <html>
+            <head>
+                <script type="text/javascript" src="static/jquery-3.3.1.js"></script>
+                <script type="text/javascript" src="static/jquery-3.3.1.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            </head>
+            <body>
+               <p> Nome : </p>
+               <input type="input" id="nome"/>
+
+               <p> Email : </p>
+               <input type="input" id="email"/>
+               </br>
+               <input type="submit" value = 'test button' id="submit"/></input><br><br>
+               <p id = "message"></p>
+
+               <script type="text/javascript" src="static/js/ajax_JQuery.js"></script>
+
+               <script type="text/javascript">
+
+                     $(document).ready(function(){
+                             $('#submit').click(function(event){
+                                alert("hello");
+                                event.preventDefault();
+                                var nome = $("#nome").data();
+                                var email = $("#email").data();
+                                var data = {
+                                   "nome" : nome,
+                                   "email" : email,
+                                };
+                                $.ajax({
+                                  type: "POST",
+                                  url: "/add_me/",
+                                  data: data,
+                                  success: function(){ $('#message').html("<h2>Contact Form Submitted!</h2>")},
+                                  dataType: "json",
+                                  contentType : "application/json"
+
+                                });
+                                document.location = '/personel/add_me/';
+                                return false;
+                             });
+
+                            $('#email').change(function () {
+                              var validateEmail = $(this).val();
+
+                              $.ajax({
+                                url: '/add/validate_email/',
+                                data: {
+                                  'email': validateEmail,
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                  if (data.is_taken) {
+                                    alert("A user with this username already exists.");
+                                  }
+                                }
+                              });
+
+                            });
+                     });
+
+               </script>
+            </body>
+
+</html>
